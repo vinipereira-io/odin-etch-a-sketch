@@ -1,9 +1,13 @@
 .grid-container{
+    width: 900px;
+    height: 900px;
     display: grid;
 }
 
 .grid-square{
-    height: 60px;
-    width: 60px;
-    border: 1px solid black;
+    border: .5px solid black;
+}
+
+.pixelated{
+    background-color: black;
 }
