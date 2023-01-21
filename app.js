@@ -1,10 +1,14 @@
 const container = document.querySelector('.grid-container');
 
-function createGrid(scale) {
-    container.style.gridTemplateColumns = `repeat(${scale}, 1fr)`;
-    container.style.gridTemplateRows = `repeat(${scale}, 1fr)`;
+const resetButton = document.querySelector('button#reset');
 
-    for (i = 0; i < scale ** 2; i++) {
+const clearButton = document.querySelector('button#clear');
+
+function createGrid(density) {
+    container.style.gridTemplateColumns = `repeat(${density}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${density}, 1fr)`;
+
+    for (i = 0; i < density ** 2; i++) {
         const div = document.createElement('div');
     
         div.classList.add('grid-square');
@@ -21,4 +25,34 @@ function pixelate(e) {
     e.target.classList.add('pixelated');
 }
 
-createGrid(100);
+function resetGrid(newDensity) {
+    const gridSquares = Array.from(document.querySelectorAll('.grid-square'));
+
+    gridSquares.forEach(square => {
+        square.remove()
+    });
+
+    if (newDensity < 10) {
+        createGrid(10);
+        alert('The minimum density value is 10!');
+    } else if (newDensity > 100) {
+        createGrid(100);
+        alert('The maximum density value is 100!');
+    } else {
+        createGrid(newDensity);
+    }
+}
+
+function clearGrid() {
+    const gridSquares = Array.from(document.querySelectorAll('.grid-square'));
+
+    gridSquares.forEach(square => {
+        square.classList.remove('pixelated');
+    });
+}
+
+createGrid(16);
+
+resetButton.addEventListener('click', () => { resetGrid(prompt(`Choose the board's density (min. 10 max. 100)`, 16)); });
+
+clearButton.addEventListener('click', clearGrid);
